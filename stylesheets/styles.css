@@ -1,0 +1,15 @@
+.inline-icon {
+    margin-top: -12px;
+    position: relative;
+    top: 6px;
+}
+
+.twemoji.medium {
+    font-size: 1.5em;
+    margin-top: -6px;
+}
+
+.twemoji.big {
+    font-size: 2em;
+    margin-top: -10px;
+}
