@@ -18,16 +18,11 @@ internal static class ConfigurationMenu
         // don't get stuck in the UI and become unable to be removed.
         var activeClientMods = pageRegistry.Mods.Select(mod => mod.UniqueID).ToHashSet();
         config.Integrations.Priorities.RemoveAll(p => !activeClientMods.Contains(p.ModId));
-
-        var context = new ConfigurationViewModel(helper, config)
-        {
-            Items =
-            {
-                ApiItems = pageRegistry
-                    .StandaloneItems.Select(x => ApiItemViewModel.FromItem(x.Mod, x.Item))
-                    .ToList(),
-            },
-        };
+        var items = new ItemsConfigurationViewModel();
+        items.ApiItems = pageRegistry
+            .StandaloneItems.Select(x => ApiItemViewModel.FromItem(x.Mod, x.Item))
+            .ToList();
+        var context = new ConfigurationViewModel(helper, config, items);
         context.Controller = asRoot
             ? ViewEngine.OpenRootMenu("Configuration", context)
             : ViewEngine.OpenChildMenu("Configuration", context);
