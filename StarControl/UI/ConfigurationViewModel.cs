@@ -14,7 +14,7 @@ internal partial class ConfigurationViewModel : IDisposable
     public bool Dismissed { get; set; }
     public InputConfigurationViewModel Input { get; } = new();
     public bool IsNavigationDisabled => !IsNavigationEnabled;
-    public ItemsConfigurationViewModel Items { get; } = new();
+    public ItemsConfigurationViewModel Items { get; }
     public ModIntegrationsViewModel Mods { get; }
     public PagerViewModel<NavPageViewModel> Pager { get; } = new();
     public RadialMenuPreview Preview { get; }
@@ -37,10 +37,15 @@ internal partial class ConfigurationViewModel : IDisposable
     private int loadingFrameCount;
     private int loadingPageIndex = 1;
 
-    public ConfigurationViewModel(IModHelper helper, ModConfig config)
+    public ConfigurationViewModel(
+        IModHelper helper,
+        ModConfig config,
+        ItemsConfigurationViewModel items
+    )
     {
         this.helper = helper;
         this.config = config;
+        Items = items;
         var modId = helper.ModContent.ModID;
         var selfPriority = ModPriorityViewModel.Self(modId, Items);
         Mods = new(helper.ModRegistry, selfPriority);
